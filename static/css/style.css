@@ -1,0 +1,105 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Merienda', cursive;
+
+}
+
+
+/* index css  */
+.section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    margin: 0; 
+}
+
+.div1, .div2 {
+    width: 50%;
+    height: 100vh;
+    box-sizing: border-box; 
+    font-family: 'Merienda', cursive;
+}
+
+.div1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+}
+.div1 .subdiv {
+    width: 70%;
+
+}
+.div1 .subdiv h2 {
+    font-size: 70px;
+}
+
+.div2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: right;
+    
+}
+
+.div2 .subdiv img {
+    width: 65%;
+    border-radius: 20px;
+    margin-left: 40px;
+
+}
+
+
+
+/* detect page  */
+.section .div1 .body {
+    display: flex;
+    flex-direction: column;
+}
+
+.section .div2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.section .div2 .subdiv1{
+    margin: auto;
+}
+
+
+
+/* view recipe css  */
+
+.section2{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.section2 .div3, .div4 {
+    width: 50%;
+}
+
+a{
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Food for ingredients */
+
+
+.section3 .container3 {
+    padding-top: 50px;
+}
+.section3 .container3 img{
+    width: 30%;
+    margin: auto;
+    border-radius: 50px;
+    padding: 30px;
+}
+
+

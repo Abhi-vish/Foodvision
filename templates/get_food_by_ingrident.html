@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        .section3 {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .section3 .container {
+            position: relative;
+            top: 160px;
+        }
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info span {
+            display: flex;
+            justify-content: center;
+            font-style: italic;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            width: 150px !important;  /* Adjust the width as needed */
+            margin-right: 10px; /* Add margin to separate input and button */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .section3 .div6 {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+ <section class="section3">
+    <div class="container">
+        <div class="info">
+            <h3>Find Meal for Your Ingredients</h3>
+            <p>Real Food doesn't have ingredients, real food is ingredients. <span>~ Jamie Oliver</span></p>
+        </div>
+        <form action="/MealForIngredients" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="ingredient" />
+                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search</button>
+            </div>
+            
+        <h2 class="pt-5 text-center">Your Search Results:</h2>
+
+        </form>
+
+        {% if meals %}
+        <div class="row">
+            {% for meal in meals %}
+            <div class="card m-3 col-sm-4" style="width: 25rem;">
+                <img src="{{meal.strMealThumb}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{meal.strMeal}}</h5>
+                    <a href="{{ url_for('meal_details', meal_id=meal.idMeal) }}" class="btn btn-primary">View Details</a>
+                 </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        
+        <h2 class="p-5 text-center">Sorry,we didn't find any meal!</h2>
+        {% endif %}
+    </div>
+
+    <div class="div6">
+        
+    </div>
+</section>
+    
+{% endblock content %}

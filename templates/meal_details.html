@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <section class="section3">
+        <div class="container container3">
+            {% if meal %}
+                <div class="card my-5" style="">
+                    <h1 class="card-title text-center mb-1">{{ meal.strMeal }}</h1>
+                    <img src="{{ meal.strMealThumb }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-decoration: underline;">{{ meal.strMeal }}</h5>
+                        <p class="card-text">
+                            {% for step in meal.strInstructions.split('\r\n') %}
+                                {{step}}<br>
+                            {% endfor %}
+                        </p>
+                        <ul>
+                            {% for i in range(1, 21) %}
+                                {% set ingredient = meal['strIngredient' ~ i] %}
+                                {% set measure = meal['strMeasure' ~ i] %}
+                                {% if ingredient %}
+                                    <li>{{ measure }} {{ ingredient }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <a href="{{ meal.strYoutube }}" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                    </div>
+                </div>
+            {% else %}
+                <p>Meal details not found.</p>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock content %}

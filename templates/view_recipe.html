@@ -1,0 +1,38 @@
+{% include "base.html" %} 
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card mx-auto" style="">
+        <div class="card-body mt-5">
+            <h1 class="card-title text-center">{{ recipe.title }}</h1>
+
+            <!-- Display the recipe image if available -->
+            {% if recipe.image %}
+            <div class="text-center mb-3">
+                <img src="{{ recipe.image }}" alt="{{ recipe.title }}" style='border-radius: 20px;' class="img-fluid">
+            </div>
+            {% endif %}
+
+            <!-- Ingredients section -->
+            <h2 class="section-title">Ingredients</h2>
+            <!-- Create an unordered list for displaying the ingredients -->
+            <ul class="ingredient-list">
+                <!-- Loop through each ingredient in the recipe's extendedIngredients -->
+                {% for ingredient in recipe.extendedIngredients %}
+                <li>{{ ingredient.original }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Instructions Section -->
+            <h2 class="section-title">Instructions</h2>
+            <ol class="instruction-list">
+                {% for step in recipe.analyzedInstructions[0].steps %}
+                <li>{{ step.step }}</li>
+                {% endfor %}
+            </ol>
+            <a href="/foodInformation" class="btn btn-primary">Back to search results</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
