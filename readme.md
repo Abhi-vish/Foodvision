@@ -1,4 +1,4 @@
-```markdown
+
 # Food Vision
 
 Food Vision is a comprehensive tool designed to help users identify food in images, obtain nutritional information, discover recipes related to the identified food, find places to purchase the food, and interact with an integrated chatbot for seamless navigation and assistance.
