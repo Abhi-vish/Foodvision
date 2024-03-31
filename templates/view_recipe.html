@@ -1,38 +1,123 @@
 {% include "base.html" %} 
-{% block content %}
 
-<div class="container mt-5">
-    <div class="card mx-auto" style="">
-        <div class="card-body mt-5">
-            <h1 class="card-title text-center">{{ recipe.title }}</h1>
+{% block head %}
+<style>
+    i{
+    font-size: 50px; /* Set the size to 50px */
+  } 
+  a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+  }
+  /* Style for transparent background */
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  .modal-content {
+    max-width: 100%;
+  }
+  .modal-body {
+    overflow: auto;
+    max-height: calc(100vh - 200px); /* Adjust as needed */
+  }
+  .list-group-numbered>.list-group-item::before{
+    content: none;
+  }
+</style>
+{% endblock head %}
 
-            <!-- Display the recipe image if available -->
-            {% if recipe.image %}
-            <div class="text-center mb-3">
-                <img src="{{ recipe.image }}" alt="{{ recipe.title }}" style='border-radius: 20px;' class="img-fluid">
+{% block container %}
+<div class="container mt-5" style="text-align: justify;">
+    <div class="" style="text-align: left;">
+        <h2 class="fs-4">Recipe Details</h2>
+        <h4 style="font-weight: 500; color: black;" class="fs-1 mb-2">{{recipe.title}}</h4>
+        <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-xl-8">
+            <div class="card" style="border: none;">
+                <div class="card-body mt-3">
+                    <!-- Display the recipe image if available -->
+                    {% if recipe.image %}
+                    <div class="text-center mb-3">
+                        <img src="{{ recipe.image }}" alt="{{ recipe.title }}" style="width: 100%;" class="img-fluid">
+                    </div>
+                    <div class="info">
+                        <p><strong>Ready in:</strong> {{recipe.readyInMinutes}}mins</p>
+                        <p><strong>Ingredients:</strong> {{ing_counts}}</p>
+                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#nutritionalModal">Nutritional Info</a>
+                    </div>
+                    {% endif %}
+                    <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+                    <!-- Ingredients section -->
+                    <h2 class="section-title">Ingredients</h2>
+                    <!-- Create an unordered list for displaying the ingredients -->
+                    <ul class="ingredient-list px-2">
+                        <!-- Loop through each ingredient in the recipe's extendedIngredients -->
+                        {% for ingredient in recipe.extendedIngredients %}
+                        <li class="list-group-item">
+                          <span class="fw-bold">{{ loop.index }}</span>. <span class="fs-5">{{ ingredient.original }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+                    <!-- Instructions Section -->
+                    <h2 class="section-title">Instructions</h2>
+                    <ol class="instruction-list list-group list-group-numbered">
+                        {% for step in recipe.analyzedInstructions[0].steps %}
+                        <li class="list-group-item">
+                            <span class="fw-bold">{{ loop.index }}</span>. <span class="fs-5">{{ step.step }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+
+
+                    <a href="/foodInformation" class="btn btn-primary mt-3">Back to search results</a>
+                </div>
             </div>
-            {% endif %}
+        </div>
 
-            <!-- Ingredients section -->
-            <h2 class="section-title">Ingredients</h2>
-            <!-- Create an unordered list for displaying the ingredients -->
-            <ul class="ingredient-list">
-                <!-- Loop through each ingredient in the recipe's extendedIngredients -->
-                {% for ingredient in recipe.extendedIngredients %}
-                <li>{{ ingredient.original }}</li>
-                {% endfor %}
-            </ul>
-
-            <!-- Instructions Section -->
-            <h2 class="section-title">Instructions</h2>
-            <ol class="instruction-list">
-                {% for step in recipe.analyzedInstructions[0].steps %}
-                <li>{{ step.step }}</li>
-                {% endfor %}
-            </ol>
-            <a href="/foodInformation" class="btn btn-primary">Back to search results</a>
+        <div class="col-md-4 col-xl-4">
+            <div class="text-center">
+                <a href="https://github.com/Abhi-vish" target="_blank"> 
+                    <i class="fab fa-square-github"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/abhishek-vishwakarma777/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                  <a href="https://twitter.com/Vishbhishek?s=09" target="_blank"> 
+                    <i class="fab fa-square-twitter"></i>
+                  </a>
+            </div>
         </div>
     </div>
 </div>
 
-{% endblock content %}
+<!-- Modal -->
+<div class="modal fade" id="nutritionalModal" tabindex="-1" aria-labelledby="nutritionalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="nutritionalModalLabel">Nutritional Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!-- <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+        <div class="modal-body mx-auto">
+          <img style="" src="{{ url_for('static',filename='neutritional_img/Neutritional.png') }}" class="img-fluid" alt="Nutritional Label">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Bootstrap JS and jQuery (required for Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock container %}

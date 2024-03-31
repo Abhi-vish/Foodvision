@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<div class="container">
+    <div class="col">
+        <h2 class="pt-5">Places to Get: <span class="text-success">Chicken Curry</span></h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <img src="{{ url_for('static', filename='images/banner.webp') }}" class="card-img" alt="image" style="height: 100%; width: 100%; object-fit: cover;">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">Chicken Curry</h5>
+                                <p class="card-text">Rating: <span class="text-success">6</span></p>
+                                <p class="card-text">Address: <span class="text-success">andheri east, mumbai</span></p>
+                                <p class="card-text">Phone no: <span class="text-success">1234567890</span></p>
+                                <a href="/location_detail" class="btn btn-primary">Get Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock container %}

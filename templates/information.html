@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+
+</style>
+{% endblock head %}
+{% block container %}
+
+<div class="container p-0 m-0">
+    <div class="col-md-8 col-xl-6 text-center mx-auto">
+        <h2 class="p-3">Food Details</h2>
+        <h6 class="text-center mb-2 text-muted">
+            Here is the Details of the scanned Food Image.
+        </h6>
+    </div>
+
+    <div class="container-fluid py-2" style="height: 25px; background-color: #f2f2f2;"></div>
+
+    <div class="row" style="height: 600px;">
+      <div class="card mx-auto" style="width: 40rem; border: none;border-radius: 0; display: flex; flex-direction: column; align-items: center;">
+        <div class="cropped-container">
+            {% if data %}
+            <img class="card-img-top cropped-image image-fluid" src="{{ data.image }}" alt="Detected Food">
+            <div class="gradient-overlay"></div>
+        </div>
+        <div class="card-body card_body_2">
+            <h6 class="card-subtitle mb-2 text-muted">Detected Food: <span class="text-success">{{ data.pred_class }}</span></h6>
+            <hr />
+            <h6 class="card-subtitle mb-2 text-muted">Nutritional information :</h6>
+            <p>Calories: {{ data.nutrition.calories }} kcal</p>
+            <p>Protein: {{ data.nutrition.protein }}</p>
+            <p>Carbohydrates: {{ data.nutrition.carbs }}</p>
+            {% else %}
+            <p>No data available.</p>
+            {% endif %}
+        </div>
+    </div>
+  </div>
+  <div class="container-fluid pb-3" style="height: 35px; background-color: #f2f2f2;"></div>
+
+
+
+  <!-- food details  -->
+  <div class="container-fluid pt-4">
+    <h2 class="py-3">FIND RECIPES AND PLACES TO GET <span>{{data.pred_class}}</span></h2>
+    <div class="row justify-content-evenly">
+      <div class="col-md-4">
+        <a href="/foodInformation" target="_blank">
+          <div class="d-flex justify-content-center align-items-center" style="height: 400px; cursor: pointer;">
+            <div class="card custom-card-width mt-3">
+              <img src="{{ data.image }}" alt="Easter Cake" class="card-img custom-image_3">
+              <div class="card-img-top card_body_3">
+                <h5 class="card-title">COLLECTION</h5>
+                <p class="card-text">Discover delicious {{data.pred_class}} recipes to try at home!</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="d-flex justify-content-center align-items-center" style="height: 400px; cursor: pointer;">
+          <a href="/restaurants" target="_blank">
+            <div class="card custom-card-width mt-3">
+              <img src="{{ url_for('static',filename='images/resturant.jpg') }}" alt="Springtime Salads" class="card-img custom-image_3">
+              <div class="card-img-top card_body_3">
+                <h5 class="card-title">COLLECTION</h5>
+                <p class='card-text'>Explore nearby places and restaurants serving {{data.pred_class}} dishes!</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+  
+      <!-- Add more cards as needed -->
+    </div>
+  </div>
+  
+  
+<!-- food details end  -->
+
+{% endblock container %}

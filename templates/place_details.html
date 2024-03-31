@@ -1,0 +1,127 @@
+{% include "base.html" %}
+
+{% block head %}
+<style>
+    /* Additional styles */
+    .big-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .small-image {
+        width: 100px;
+        height: 100px;
+        margin-right: 5px;
+        cursor: pointer; /* Add cursor pointer */
+    }
+
+    .user-review-content {
+        display: none; /* Hide user review content by default */
+    }
+    .i1{
+        font-size: 50px; /* Set the size to 50px */
+      } 
+      a {
+        text-decoration: none;
+        color: black;
+        padding: 10px;
+      }
+</style>
+{% endblock head %}
+
+{% block container %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="" style="text-align: left;">
+                <h2 class="fs-4">Restaurant Details</h2>
+                <h2 class="fs-1">{{ place_detail.place_results.title }}</h2>
+                <h4 style="font-weight: 500; color: black;" class="fs-4 mb-2">Food Suggested : <span class="text-success text-bold">{{food_name}}</span></h4>
+            </div>
+            <!-- Main content -->
+            <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+            <img src="{{ place_detail.place_results.images[0].thumbnail }}" alt="Main Image" class="big-image mb-3" id="mainImage">
+            <div class="d-flex flex-wrap">
+                {% for image in place_detail.place_results.images[1:] %}
+                <img src="{{ image.thumbnail }}" alt="Image" class="small-image" onclick="changeMainImage('{{ image.thumbnail }}')">
+                {% endfor %}
+            </div>
+            <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+            <p><strong>Open State:</strong> {{ place_detail.place_results.open_state }}</p>
+            <p><strong>Address:</strong> {{ place_detail.place_results.address }}</p>
+            <p><strong>Phone:</strong> {{ place_detail.place_results.phone }}</p>
+            <a class="btn btn-success" target="_blank" href="{{ place_detail.search_metadata.google_maps_url }}">Get Location</a>
+
+            <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+<!-- Review Section -->
+<div class="container mt-5">
+    <h2>User Reviews</h2>
+    <div class="row">
+        {% for review in place_detail.place_results.user_reviews.most_relevant %}
+        <div class="">
+            <div class="card mb-4 w-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.username }}</h5>
+                    <p class="card-text">{{ review.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="stars">
+                            <!-- Adjust star icons based on the rating -->
+                            {% set full_stars = review.rating | int // 1 %}
+                            {% set half_star = review.rating | float % 1 %}
+                            {% set empty_stars = 5 - full_stars - (1 if half_star > 0 else 0) %}
+                            {% for _ in range(full_stars) %}
+                            <i class="fa-solid fa-star"></i>                            {% endfor %}
+                            {% if half_star > 0 %}
+                            <i class="fa-solid fa-star-half-stroke"></i>                            {% endif %}
+                            {% for _ in range(empty_stars) %}
+                            <i class="fa-regular fa-star"></i>                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+        </div>
+        <div class="col-md-4">
+            <!-- Sidebar content -->
+            <div class="text-center mt-3">
+                <a href="https://github.com/Abhi-vish" target="_blank"> 
+                    <i class="fab fa-github i1"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/abhishek-vishwakarma777/" target="_blank">
+                    <i class="fab fa-linkedin i1"></i>
+                </a>
+                <a href="https://twitter.com/Vishbhishek?s=09" target="_blank"> 
+                    <i class="fab fa-twitter i1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock container %}
+
+{% block scripts %}
+<script>
+    // Function to change main image when small image is clicked
+    function changeMainImage(imageSrc) {
+        document.getElementById('mainImage').src = imageSrc;
+    }
+
+    // Function to toggle display of user review content
+    function toggleReviewContent(username) {
+        var reviewContent = document.getElementById(username);
+        if (reviewContent.style.display === "none") {
+            reviewContent.style.display = "block";
+        } else {
+            reviewContent.style.display = "none";
+        }
+    }
+</script>
+{% endblock scripts %}

@@ -1,42 +1,45 @@
 import torch
 from torch import nn
-import torchvision
 from torchvision import models, transforms
 from PIL import Image
 import numpy as np
+from transformers import ViTFeatureExtractor, ViTForImageClassification
 
 # Device agnostic code
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# Loading Vision Transformer model
-model = models.vit_b_16(pretrained=True)
+# Load pre-trained ViT model
+model_name = "google/vit-base-patch16-224-in21k"
+feature_extractor = ViTFeatureExtractor(model_name)
+model = ViTForImageClassification.from_pretrained(model_name)
 
-# Modifying  the last layer
-model.heads = nn.Linear(in_features=768,
-                        out_features=101)
+# Modifying the classifier layer as our need
+num_classes = 101
+model.classifier = torch.nn.Linear(in_features=model.config.hidden_size,
+                                   out_features=num_classes)
 
-# Loading saved weight
-saved_state_dict = torch.load('static/model/vit_model.pth',
-                              map_location=torch.device('cpu'))
+# Checkpoint
+checkpoint = torch.load("static/model/vit_fine_tuned_model.pth",
+                        map_location=torch.device('cpu'))
+model.load_state_dict(checkpoint)
 
-# Loading the weight into model
-model.load_state_dict(saved_state_dict)
-
-# Define data transformations
+# Prepare the dataset
 transform = transforms.Compose([
-    transforms.RandomResizedCrop(224),
-    transforms.RandomHorizontalFlip(),
+    transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-
-# Prediction 
+# Prediction
 def prediction(image_path):
-    image = Image.open(image_path)
-    image = transform(image).unsqueeze(0)
-    output = model(image)
-    output = output.detach().numpy() 
-    index = np.argmax(output)
-    return index
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    model.eval()
 
+    with torch.no_grad():
+        image = Image.open(image_path)
+        input_tensor = transform(image).unsqueeze(0).to(device)
+
+        output = model(input_tensor).logits
+        _, index = torch.max(output, 1)
+
+    return index.item()

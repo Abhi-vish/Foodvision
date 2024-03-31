@@ -1,105 +1,500 @@
-body, html {
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alkatra&family=Arimo&family=Hind:wght@500&family=Josefin+Sans:ital@1&family=Ms+Madi&family=Nunito:wght@500&family=Permanent+Marker&family=Poppins&family=Ubuntu:ital,wght@1,500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alkatra:wght@400..700&family=Arimo&family=Hind:wght@500&family=Josefin+Sans:ital@1&family=Ms+Madi&family=Nunito:wght@500&family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@1,500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
     padding: 0;
-    font-family: 'Merienda', cursive;
-
+    margin: 0;
+    box-sizing: border-box;
 }
 
+body {
+    /* background-color: rgb(0, 0, 0); */
+    background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
-/* index css  */
-.section {
+.gradient-overlay::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    margin: 0; 
+    height: 100%;
+    background: linear-gradient(to left, rgba(21, 20, 20, 0), rgba(0, 0, 0, 0.7));
+    z-index: -1; /* Ensure the gradient is below the card content */
+  }
+
+
+nav {
+    font-family: "Alkatra", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
-.div1, .div2 {
-    width: 50%;
+
+/* card  */
+.custom-image {
+    width: 350px;
+    height: 300px;
+  }      
+  .card-img-top::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(21, 20, 20, 0), rgba(0, 0, 0, 0.7));
+    z-index: -1; /* Ensure the gradient is below the card content */
+  }
+  .custom-card-width {
+    width: 350px;
+  }
+  
+  .card_body{
+    position: absolute;
+    bottom: 0;
+    padding-left: 10px;
+    color: white;
+    font-family: "Kanit", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    z-index: 1;
+  }
+  .card_body p {
+    font-size: 40px;
+  }
+
+
+
+  /* # chatbot  css  */
+ /* toggler css  */
+
+#container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
     height: 100vh;
-    box-sizing: border-box; 
-    font-family: 'Merienda', cursive;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: right;
+    justify-content: right;
+    z-index: 111111;
 }
+
+#content {
+    width: 500px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#openButton {
+    padding: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* contaienr css  */
+.input {
+    width: 100%;
+    position: absolute;
+    bottom: -20px;
+}
+.input input {
+    width: 48%;
+    padding: 10px;
+}
+.input #result {
+    width: 48%;
+    height: 85vh;
+    text-align: justify;
+    overflow-y: auto; /* Added to enable scrolling when content exceeds height */
+}
+#chatWindow {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 300px;
+    display: none;
+}
+/* Added style for code formatting */
+.code-block {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+body::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 
 .div1 {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: justify;
-}
-.div1 .subdiv {
-    width: 70%;
-
-}
-.div1 .subdiv h2 {
-    font-size: 70px;
 }
 
-.div2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: right;
+
+.row {
+    margin-right: 0;
+  }
+  .breadcrumb {
+          background-color: transparent;
+          padding: 0;
+          padding-top: 10px;
+          margin: 0;
+          font-size: 18px;
+      }
+  
+      .breadcrumb-item {
+          padding: 0;
+          margin: 0;
+      }
+  
+      .breadcrumb-item a {
+          color: blue;
+          font-weight: bold;
+          text-decoration: none;
+      }
+  
+      .breadcrumb-item.active {
+          color: #333;
+      }
+
+/* recipe card end  */
+/* Desktop devices */
+@media only screen and (min-width: 1024px) {
+    .navbar {
+        height: 80px;
+    }
+    .carousel-caption{
+        font-family: "Permanent Marker", cursive;
+        font-weight: 400;
+        font-style: normal;
+        top: 40%;
+        left: 0;
+        text-align: left;
+        padding-left: 5rem;
+    }
+    .carousel-caption h3 {
+        font-size: 4.5rem;
+    }
+    .carousel-caption p {
+        font-size: 1.3rem;
+    }
+    .carousel-caption .btn {
+        font-size: 1.3rem;
+    }
+    .custom-image {
+        width:auto;
+        height: 300px;
+
+      }  
+      .custom-card-width {
+        width: auto;
+      }
+      
+
+      /* get info  */
+      .card_info {
+        width: 25rem;
+    }
+    .input #result {
+        width: auto; /* Let the width adapt automatically */
+        max-width: 23%; /* Set maximum width to 23% */
+    }
+    .input input {
+        width: 23%;
+        margin-bottom: 50px;
+    }
+    #result .question {
+        width: 100%;
+    }
+
+    /* food details  */
+    .cropped-container {
+        overflow: hidden;
+        width: 100%;
+        /* border-radius: 20px; */
+        height: 500px; /* Adjust the height as needed */
+    }
+    .cropped-image {
+        width: 100%;
+        clip-path: polygon(0px 0%, 100% 0%, 100% 80%, 0px 80%);
+    }
+
+    .card_body_2 {
+        width: 80%;
+        background-color: rgb(246, 244, 244);
+        position: absolute;
+        top: 350px;
+        border: 1px solid black;
+        z-index: 111;
+    }
+
+    /* places and recipes  */
+    .card_body_3{
+        position: absolute;
+        bottom: 0;
+        padding-left: 10px;
+        color: white;
+        font-family: "Kanit", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        z-index: 1;
+    }
+    .card_body_3 p {
+        font-size: 40px;
+    }
+
+    .custom-image_3 {
+        height: 406px; 
+        width: 406px; 
+    }  
+
+
+  }
+
+/* Mobile devices (phones) */
+@media only screen and (max-width: 767px) {
     
-}
+    .navbar-dark .navbar-nav .nav-link {
+        color: black; /* Set the text color to white or another contrasting color */
+      }
+    .carousel-caption{
+        width: 90%;
+        position: relative;
+        margin-top: 10px;
+        left: 20px;
+        color: black;
+        font-family: "Permanent Marker", cursive;
+        font-weight: 400;
+        font-style: normal;
+        text-align: left;
+    }
+    .carousel-caption h3 {
+        font-size: 2.5rem;
+    }
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+    .carousel-caption .btn {
+        font-size: 1rem;
+    }
 
-.div2 .subdiv img {
-    width: 65%;
-    border-radius: 20px;
-    margin-left: 40px;
+    .card_info {
+        width: 22rem;
+    }
 
-}
+    #chatbot_btn {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 50%;
+        z-index: 111;
+        padding: 10px;
+    }
+    #chatbot_btn img {
+        width: 50px;
+      
 
+    }
 
+    .input input {
+        width: 90%;
+        padding: 10px;
+    }
+    .input input {
+        position: absolute;
+        bottom: 70px;
+        width: 90%;
+    }
+    .input #result {
+        height: 94vh;
+        width: 90%;
+        padding-bottom: 100px;
+    }
+    #chatWindow {
+        position: fixed;
+        top: 100px;
+        bottom: 10px;
+        right: 10px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-width: 300px;
+        display: none;
+    }
+    #result .question {
+        width: 100%;
+    }
 
-/* detect page  */
-.section .div1 .body {
-    display: flex;
-    flex-direction: column;
-}
+    /* Recipe card  */
+    .cropped-container {
+        overflow: hidden;
+        width: 100%;
+        /* border-radius: 20px; */
+        height: 400px; /* Adjust the height as needed */
+    }
+    .cropped-image {
+        margin: 10px;
+        width: 100%;
+        clip-path: polygon(0px 0%, 100% 0%, 100% 100%, 0px 100%);
+    }
 
-.section .div2{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.section .div2 .subdiv1{
-    margin: auto;
-}
+    .card_body_2 {
+        width: 80%;
+        background-color: rgb(246, 244, 244);
+        position: absolute;
+        top: 250px;
+        border: 1px solid black;
+        z-index: 111;
+    }
+    /* places and recipes  */
+    .card_body_3{
+        position: absolute;
+        bottom: 0;
+        padding-left: 10px;
+        color: white;
+        font-family: "Kanit", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        z-index: 1;
+    }
+    .card_body_3 p {
+        font-size: 25px;
+    }
+    
+    .custom-image_3 {
+        height: 348px; 
+        width: 348px; 
+    } 
+    .container1 {
+        padding: 0;
+    }
+    #recpie_ing_service{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    #image-recognition, #nearby-restaurants,#ingredient-recipe {
+        border: 1px solid black;
+        text-align: justify;
+    }
+  }
+  
+  /* Tablets */
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .navbar {
+        height: 80px;
+    }
+    .navbar-dark .navbar-nav .nav-link {
+        color: black; /* Set the text color to white or another contrasting color */
+      }
+    .carousel-caption{
+        font-family: "Permanent Marker", cursive;
+        font-weight: 400;
+        font-style: normal;
+        top: 40%;
+        left: 0;
+        text-align: left;
+        padding-left: 5rem;
+    }
+    .carousel-caption h3 {
+        font-size: 3.5rem;
+    }
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+    .carousel-caption .btn {
+        font-size: 1rem;
+    }
+    .container {
+        max-width: 905px;
+    }
+    .custom-image {
+        width: 250px;
+        height: 200px;
+      }  
+      .custom-card-width {
+        width: 250px;
+      }
+      /* chatbot btn  */
+      
+    #chatbot_btn {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 50%;
+        z-index: 111;
+        padding: 10px;
+    }
+    #chatbot_btn img {
+        width: 50px;
+      
 
+    }
+      .input #result {
+        width: 56%;
+      }
+      .input input {
+        width: 56%;
+        margin-bottom: 50px;
+      }
 
+      /* food card  */
+    .cropped-container {
+        overflow: hidden;
+        width: 100%;
+        height: 
+        600px; /* Adjust the height as needed */
+    }
+    .cropped-image {
+        width: 100%;
+        clip-path: polygon(0px 0%, 100% 0%, 100% 80%, 0px 80%);
+    }
+    .card_body_2 {
+        width: 80%;
+        background-color: rgb(246, 244, 244);
+        position: absolute;
+        top: 300px;
+        border: 1px solid black;
+        z-index: 111;
+    }
 
-/* view recipe css  */
-
-.section2{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-}
-
-.section2 .div3, .div4 {
-    width: 50%;
-}
-
-a{
-    list-style: none;
-    text-decoration: none;
-    color: black;
-}
-
-
-/* Food for ingredients */
-
-
-.section3 .container3 {
-    padding-top: 50px;
-}
-.section3 .container3 img{
-    width: 30%;
-    margin: auto;
-    border-radius: 50px;
-    padding: 30px;
-}
-
-
+      /* places and recipes  */
+    .card_body_3{
+        position: absolute;
+        bottom: 0;
+        padding-left: 10px;
+        color: white;
+        font-family: "Kanit", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        z-index: 1;
+    }
+    .card_body_3 p {
+        font-size: 25px;
+    }
+    .custom-image_3 {
+        height: 348px; 
+        width: 348px; 
+    } 
+  }

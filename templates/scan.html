@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <form class="text-center" action="/information" method="POST" enctype="multipart/form-data">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="p-3">Get Food Details</h2>
+                    <h6 class="text-center mb-2 text-muted">
+                        Simply upload your Food Image to Get Information.
+                    </h6>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-xl-4">
+                    <div class="card mb-5">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img style="width: 60%; height: auto;" src="{{ url_for('static', filename='images/dummy_food.jpg' )}}">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <br>
+                                <input id="uploadButton" class="form-control" type="file" name="image">
+                            </div>
+                            <div class="mb-3"></div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Get Information</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    function openStorageOption() {
+        Android.openFileInput();
+    }
+    const actual_btn = document.getElementById('actual-btn');
+    const file_choosen = document.getElementById('file-chosen')
+
+    actual_btn.addEventListener('change',function () {
+        file_choosen.textContent = this.files[0].name;
+    });
+</script>
+
+
+{% endblock container %}

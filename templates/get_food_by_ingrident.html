@@ -1,87 +1,108 @@
 {% extends "base.html" %}
-{% block content %}
-    <style>
-        .section3 {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .section3 .container {
-            position: relative;
-            top: 160px;
-        }
-        .info {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .info span {
-            display: flex;
-            justify-content: center;
-            font-style: italic;
-        }
 
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
+{% block head %}
+<style>
+    .row {
+        margin-right: 0;
+    }
+</style>
+{% endblock head %}
 
-        .form-control {
-            width: 150px !important;  /* Adjust the width as needed */
-            margin-right: 10px; /* Add margin to separate input and button */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+{% block container %}
+<style>
+    .section3 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .btn {
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-        .section3 .div6 {
-            width: 100%;
-            height: 100vh;
-        }
-    </style>
- <section class="section3">
-    <div class="container">
-        <div class="info">
-            <h3>Find Meal for Your Ingredients</h3>
-            <p>Real Food doesn't have ingredients, real food is ingredients. <span>~ Jamie Oliver</span></p>
+    .section3 .container {
+        position: relative;
+        top: 160px;
+    }
+
+    .info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .info span {
+        display: flex;
+        justify-content: center;
+        font-style: italic;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control {
+        width: 150px !important;
+        margin-right: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .section3 .div6 {
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+
+<div class="container">
+    <div class="info">
+        <h3>Find Meal for Your Ingredients</h3>
+        <p>Real Food doesn't have ingredients, real food is ingredients. <span>~ Jamie Oliver</span></p>
+    </div>
+    <form action="/MealForIngredients" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="ingredient" />
+            <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search</button>
         </div>
-        <form action="/MealForIngredients" method="post" enctype="multipart/form-data">
-            <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="ingredient" />
-                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Search</button>
-            </div>
-            
+
         <h2 class="pt-5 text-center">Your Search Results:</h2>
+    </form>
 
-        </form>
+    <div class="col-md-8 col-xl-6 text-center mx-auto">
+        <h4 style="font-weight: 500;" class="text-center mb-2 text-muted text-black">
+            Top Recipes Related To <span class="text-success" style="font-weight: 600;">{{ingredient}}</span>
+        </h4>
+    </div>
 
-        {% if meals %}
-        <div class="row">
-            {% for meal in meals %}
-            <div class="card m-3 col-sm-4" style="width: 25rem;">
-                <img src="{{meal.strMealThumb}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{meal.strMeal}}</h5>
-                    <a href="{{ url_for('meal_details', meal_id=meal.idMeal) }}" class="btn btn-primary">View Details</a>
-                 </div>
+    {% if meals %}
+    {% for meal in meals %}
+    <div class="row">
+        <div class="card mx-auto pt-3" style="width: 40rem; border: none;border-radius: 0; display: flex; flex-direction: column; align-items: center;">
+            <div class="cropped-container">
+                <img class="card-img-top cropped-image image-fluid" src="{{meal.strMealThumb}}" alt="{{meal.strMeal}}">
+                <div class="gradient-overlay"></div>
             </div>
-            {% endfor %}
+            <div class="card-body card_body_2" style="padding: 10px;border-bottom: 5px solid rgb(64, 195, 234);">
+                <p class="card-subtitle mb-2 text-muted text-black">Recipe</p>
+                <h3 class="card-subtitle mb-2 text-muted"><span class="text-black">{{meal.strMeal}}</span></h3>
+                <a href="{{ url_for('meal_details', meal_id=meal.idMeal) }}" class="btn btn-success">Get Recipes!</a>
+            </div>
+            <div class="container-fluid " style="height: 35px; background-color: #f2f2f2;"></div>
         </div>
-        {% else %}
-        
-        <h2 class="p-5 text-center">Sorry,we didn't find any meal!</h2>
-        {% endif %}
     </div>
+    {% endfor %}
+    {% else %}
+    <h4 style="font-weight: 500;" class="text-center mb-2 text-muted text-black">
+         No Recipes Found For <span class="text-success" style="font-weight: 600;">{{ingredient}}</span>
+    </h4>
+    {% endif %}
 
-    <div class="div6">
-        
-    </div>
-</section>
-    
-{% endblock content %}
+    <hr class="my-3">
+
+</div>
+{% endblock container %}

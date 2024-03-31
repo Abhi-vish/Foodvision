@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+.row {
+  margin-right: 0;
+}
+</style>
+{% endblock head %}
+
+{% block container %}
+
+
+<div class="col-md-8 col-xl-6 text-center mx-auto">
+    <h2 class="p-3">Food Details</h2>
+    <h4 style="font-weight: 500;" class="text-center mb-2 text-muted text-black">
+        Top {{no_recipe}} Recipes Related to <span class="text-success" style="font-weight: 600;">{{food_name}}</span>
+    </h4>
+</div>
+
+{% if recipes %}
+{% for recipe in recipes %}
+<div class="row">
+    <div class="card mx-auto pt-3" style="width: 40rem; border: none;border-radius: 0; display: flex; flex-direction: column; align-items: center;">
+        <div class="cropped-container">
+            <img class="card-img-top cropped-image image-fluid" src="{{ recipe['image'] }}" alt="Detected Food">
+            
+            <div class="gradient-overlay"></div>
+        </div>
+        <div class="card-body card_body_2" style="padding: 10px;border-bottom: 5px solid rgb(64, 195, 234);">
+            <p class="card-subtitle mb-2 text-muted text-black">Recipe</p>
+            <h3 class="card-subtitle mb-2 text-muted"><span class="text-black">{{ recipe['title'] }}</span></h3>
+            <a href="{{ url_for('recipe_detail', recipe_id=recipe['id']) }}" class="btn recipe_btn btn-success">Get Recipes!</a>
+        </div>
+        <div class="container-fluid " style="height: 35px; background-color: #f2f2f2;"></div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+{% else %}
+<h4 style="font-weight: 500;" class="text-center mb-2 text-muted text-black">
+     No Recipes Found For <span class="text-success" style="font-weight: 600;">{{food_name}}</span>
+</h4>
+{% endif %}
+
+<hr class="my-3">
+
+{% endblock container %}

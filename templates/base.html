@@ -1,47 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Foodvision</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
     
+    {% block head %}{% endblock %}
     <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        font-family: 'Merienda', cursive;
-
-    }
+      .chatbot-div {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 90%;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
     </style>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body px-4 fixed-top pl-0">
-      <div class="container-fluid">
+  <body class="wh-100">
+    <!-- navbar  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <!-- logo  -->
         <a class="navbar-brand" href="/">Foodvision</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- toggler btn  -->
+        <button
+          class="navbar-toggler shadow-none border-0"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-            <a class="nav-link" href="#">About</a>
-            <a class="nav-link" href="/MealForIngredients">FoodByIngredient</a>
+
+        <!-- SideBar  -->
+        <div
+          class="sidebar offcanvas offcanvas-start"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <!-- sidebar header  -->
+          <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Foodvision</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
+            <ul class="navbar-nav justify-content-center align-items-center flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#About">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#services">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/MealForIngredients">MealForIngredients</a>
+              </li>
+            </ul>
+            <!-- chatBot  -->
+            <div class="d-flex justify-content-center align-items-center gap-3">
+              <a href="#" class="text-white text-decoration-none px-3 py-1 rounded-4 d-none d-lg-block" style="background-color: #f94ca4;" onclick="openContainer()">ChatBot</a>
+            </div>
           </div>
         </div>
-        
       </div>
     </nav>
-    
-    {% block content %}
-    
-    {% endblock  %}
+    <a class="text-white text-decoration-none d-lg-none" id="chatbot_btn" style="background-color: #f94ca4; cursor: pointer; z-index: 1111;" onclick="openContainer()">
+      <img src="{{ url_for('static', filename='images/chatbot.svg') }}" alt="">
+    </a>    
+    <!-- chatbot container  -->
+    <div id="container" style="z-index: 1111; display: none;">
+      <div id="content">
+        <!-- Your content goes here -->
+        <p onclick="closeContainer()" style="font-weight: bold; font-size: 20px;cursor: pointer; z-index: 11111;">X</p>
+        <hr>
+        <div class="input">
+          {% if input_data %}
+          <div id="result"></div>
 
+          {% else %}
+          <div id="result">
+            <div class="container">
+              <div class="row">
+                  <div class="col-md-12 text-center">
+                      <img class="mt-3" src="{{ url_for('static', filename='images/chatbot.svg') }}" alt="Logo" class="img-fluid">
+                      <h1 class="mt-3 fs-4 text-bold">How can I help you today?</h1>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <button class="btn btn-primary btn-block btn-md mt-5 question" name="user_input" value="Get a recipe suggestion">Get a recipe suggestion</button>
+                  </div>
+                  <div class="col-md-6">
+                      <button class="btn btn-primary btn-block btn-md mt-5 question" name="user_input" value="Get nutritional information for a food item">Get nutritional information for a food item</button>
+                  </div>
+                  <div class="col-md-6">
+                      <button class="btn btn-primary btn-block btn-md mt-5 question" name="user_input" value="Get ingredient details for a recipe">Get ingredient details for a recipe</button>
+                  </div>
+                  <div class="col-md-6">
+                      <button class="btn btn-primary btn-block btn-md mt-5 question" name="user_input">Ask any food-related question</button>
+                  </div>
+              </div>
+          </div>
+          </div>
+
+          {% endif %}
+          <input type="text" id="userInput" placeholder="Type here..." | safe>
+        </div>
+        
+        <div id="chatWindow">
+          <div id="chatContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container1">
+      {% block container %} 
+        
+      {% endblock %}
+    </div>
+
+
+    {% block scripts %}{% endblock scripts %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      // Add a global variable to store the conversation history
+      var conversationHistory = [];
+
+      // toggler script 
+      function openContainer() {
+        document.getElementById("container").style.display = "flex";
+      }
+
+      function closeContainer() {
+        document.getElementById("container").style.display = "none";
+      }
+
+      // input script 
+      $(document).ready(function () {
+        $("#userInput").keyup(function (event) {
+          if (event.keyCode === 13) {  // Enter key
+            processInput();
+          }
+        });
+      });
+
+      function processInput() {
+        var userInput = $("#userInput").val();
+        $.ajax({
+          type: 'POST',
+          url: '/process_input',
+          data: {user_input: userInput},
+          success: function (data) {
+            // Add the current interaction to the conversation history
+            conversationHistory.push({ user: userInput, bot: data.result });
+
+            // Display all previous questions and answers in the #result div
+            displayConversationHistory();
+
+            // Append user input and bot result to the chat window
+            appendToChat(userInput, 'user');
+            appendToChat(data.result, 'bot');
+          }
+        });
+        $("#userInput").val('');
+      }
+
+      function displayConversationHistory() {
+        // Display all previous questions and answers in the #result div
+        $("#result").empty(); // Clear previous content
+        for (var i = 0; i < conversationHistory.length; i++) {
+          $("#result").append('<div class="code-block"><strong>👤 :</strong>  ' + conversationHistory[i].user + '</div>');
+          $("#result").append('<div class="code-block"><strong>🤖 :</strong> ' + conversationHistory[i].bot + '</div>');
+          // Add <hr> tag after each response
+          $("#result").append('<hr>');
+        }
+      }
+
+      function appendToChat(message, sender) {
+        var senderClass = (sender === 'user') ? 'user-message' : 'bot-message';
+        $("#chatContent").append('<div class="' + senderClass + '">' + message + '</div>');
+      }
+    </script>
   </body>
 </html>

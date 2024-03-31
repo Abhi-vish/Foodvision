@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<div class="container">
+    <div class="row mx-auto">
+        <div class="col">
+            <div style="text-align: left;" class="pt-3">
+                <h2 class="fs-4">Restaurants and Places</h2>
+                <h4 style="font-weight: 500;" class="mb-2 text-black fs-3">
+                    Discover a Selection of Dining Establishments Offering <span class="text-success fs-3"> {{ food_name }}</span>
+                </h4>
+            </div>
+            <hr style="border-top: 3px dotted #030303; margin: 20px 0;">
+            <div class="row">
+                {% for local_result in local_results %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="row no-gutters">
+                            <div class="col-md-5">
+                                <div class="card-img" style="height: 200px; overflow: hidden;">
+                                    {% if local_result.thumbnail %}
+                                    <img src="{{ local_result.thumbnail }}" class="img-fluid" alt="{{ local_result.title }}" style="object-fit: cover; width: 100%; height: 100%;">
+                                    {% else %}
+                                    <div class="text-center" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                                        <p>Image not available</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ local_result.title }}</h5>
+                                    <p class="card-text" style="font-weight:400;"><strong>Phone no: </strong><span class="text-success" style="font-weight: 400;">{{ local_result.phone }}</span></p>
+                                    <a href="{{ url_for('location_detail', place_id=local_result['place_id']) }}" class="btn btn-success">Get Details!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock container %}

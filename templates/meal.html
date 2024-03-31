@@ -1,0 +1,99 @@
+{% include "base.html" %} 
+
+{% block head %}
+<style>
+    i{
+    font-size: 50px; /* Set the size to 50px */
+  } 
+  a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+  }
+  /* Style for transparent background */
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  .modal-content {
+    max-width: 100%;
+  }
+  .modal-body {
+    overflow: auto;
+    max-height: calc(100vh - 200px); /* Adjust as needed */
+  }
+  .list-group-numbered>.list-group-item::before{
+    content: none;
+  }
+</style>
+{% endblock head %}
+
+{% block container %}
+<div class="container mt-5" style="text-align: justify;">
+    <div class="" style="text-align: left;">
+        <h2 class="fs-4">Recipe Details</h2>
+        <h4 style="font-weight: 500; color: black;" class="fs-1 mb-2">{{ meal.strMeal }}</h4>
+        <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-xl-8">
+            <div class="card" style="border: none;">
+                <div class="card-body mt-3">
+                    <!-- Display the recipe image if available -->
+                    <div class="text-center mb-3">
+                        <img src="{{ meal.strMealThumb }}" alt="{{ meal.strMeal }}" style="width: 100%;" class="img-fluid">
+                    </div>
+
+                    <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+                    <!-- Ingredients section -->
+                    <h2 class="section-title">Ingredients</h2>
+                    <!-- Create an unordered list for displaying the ingredients -->
+                    <ul class="ingredient-list p-0">
+                        <!-- Loop through each ingredient in the recipe's extendedIngredients -->
+                        {% for i in range(1, 21) %}
+                        {% set ingredient_key = "strIngredient" + i|string %}
+                        {% set measure_key = "strMeasure" + i|string %}
+                        {% if meal[ingredient_key] %}
+                            <li class="list-group-item">
+                                <span class="fw-bold">{{ loop.index }}</span>. <span class="fs-5">{{ meal[ingredient_key] }} - {{ meal[measure_key] }}</span>
+                                </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                    <a href="{{ meal.strYoutube }}" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                    <hr style="border-top: 3px dotted #030303; margin: 20px 0; ">
+
+
+                    <!-- Instructions Section -->
+                    <h2 class="section-title">Instructions</h2>
+                    <ol class="instruction-list list-group list-group-numbered">
+                        {% for step in meal.strInstructions.split('\r\n') %}
+                        <li class="list-group-item">
+                            <span class="fw-bold">{{ loop.index }}</span>. <span class="fs-5">{{step}}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+
+
+                  <a href="/foodInformation" class="btn btn-primary my-4 ">Back to search results</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-xl-4">
+            <div class="text-center">
+                <a href="#"> 
+                    <i class="fab fa-square-github"></i>
+                  </a>
+                  <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                  <a href="#"> 
+                    <i class="fab fa-square-twitter"></i>
+                  </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock container %}
