@@ -11,6 +11,10 @@ Food Vision is a comprehensive tool designed to help users identify food in imag
 4. **Places to Get Food**: Find nearby places to purchase the identified food item, including restaurants, grocery stores, and markets.
 5. **Integrated Chatbot**: Interact with the system directly through an integrated chatbot to receive assistance, ask questions, or navigate through different functionalities seamlessly.
 
+## Home Page
+
+![image](https://github.com/Abhi-vish/Foodvision/assets/109618783/22ef5320-7151-4c28-8507-e78ae6c3b263)
+
 ## Usage
 
 To use Food Vision, follow these steps:
